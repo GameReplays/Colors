@@ -1,0 +1,23 @@
+{
+    "name": "gamereplays/color",
+    "description": "A PHP color format conversion and utility library",
+    "license": "WTFPL v2",
+    "authors": [
+        {
+            "name": "Jon",
+            "email": "jon.lemaitre@gamereplays.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.6",
+        "gamereplays/functions": "~1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "GameReplays\\Color\\": "src/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.1"
+    }
+}
