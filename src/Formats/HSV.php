@@ -12,11 +12,36 @@ final class HSV extends Color
     private $s = 0;
     private $v = 0; // aka brightness
 
-    public function __construct($h, $s, $v)
+    public function __construct($h, $s, $v, $a)
     {
         $this->h = $this->clampHue($h);
-        $this->s = normalize($s, 100);
-        $this->v = normalize($v, 100);
+        $this->s = clamp($s, 0, 1);
+        $this->v = clamp($v, 0, 1);
+        $this->setAlpha($a);
+    }
+
+    /**
+     * @return float|int
+     */
+    public function h()
+    {
+        return $this->h;
+    }
+
+    /**
+     * @return float|int
+     */
+    public function s()
+    {
+        return $this->s;
+    }
+
+    /**
+     * @return float|int
+     */
+    public function v()
+    {
+        return $this->v;
     }
 
     /**
@@ -25,7 +50,7 @@ final class HSV extends Color
      * Floor selector idea from https://www.cs.rit.edu/~ncs/color/t_convert.html
      * Array value lookup idea from https://github.com/bgrins/TinyColor/blob/master/tinycolor.js#L482
      * @param int $a
-     * @return array
+     * @return RGB
      */
     public function toRGBA($a = 1)
     {
@@ -40,18 +65,54 @@ final class HSV extends Color
         $g = ([$x, $c, $c, $x, 0, 0][$i] + $m) * 255;
         $b = ([0, 0, $x, $c, $c, $x][$i] + $m) * 255;
 
-        return new RGBA($r, $g, $b, $a);
+        return new RGB($r, $g, $b, $a);
     }
 
     /**
      * Clamps the hue between 0 and 360
      * Also forces a hue of 360 to wrap back to 0 since HSV mapping is cylindrical, and 360 is the same as 0;
      * @param $h
-     * @return numeric
+     * @return float|int
      */
     private function clampHue($h)
     {
         $h = clamp($h, 0, 360);
         return $h === 360 ? 0 : $h;
+    }
+
+    /**
+     * @return string
+     */
+    public function toJson()
+    {
+        return json_encode($this->toArray());
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'h' => $this->h,
+            's' => $this->s,
+            'v' => $this->v
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    public function toString()
+    {
+        return vsprintf('hsv %s %s %s', $this->toArray());
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->toString();
     }
 }
