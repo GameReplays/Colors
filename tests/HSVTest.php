@@ -96,35 +96,21 @@ class HSVTest extends PHPUnit_Framework_TestCase
      * @param $expected
      * @param $actual
      */
-    public function test_converts_hsv_to_rgba($expected, $actual)
+    public function test_converts_hsv_to_rgba($actual, $expected)
     {
-        $this->assertSame($expected->toString(), $actual->toString());
+        $this->assertSame($expected->toString(), $actual->toRGBA()->toString());
     }
 
     public function rgbConversionProvider()
     {
-        $hsvRed = new HSV(360, 1, 1, 1);
-        $hsvGreen = new HSV(120, 1, 1, 1);
-        $hsvBlue = new HSV(240, 1, 1, 1);
-        $hsvWhite = new HSV(360, 0, 1, 1);
-        $hsvBlack = new HSV(360, 0, 0, 1);
-        $hsvCyan = new HSV(175, 1, 1, 1);
-
-        $rgbRed = new RGB(255, 0, 0, 1);
-        $rgbGreen = new RGB(0, 255, 0, 1);
-        $rgbBlue = new RGB(0, 0, 255, 1);
-        $rgbWhite = new RGB(255, 255, 255, 1);
-        $rgbBlack = new RGB(0, 0, 0, 1);
-        $rgbCyan = new RGB(0, 255, 234, 1);
-
-        // Act
         return [
-            [ $rgbRed, $hsvRed->toRGBA() ],
-            [ $rgbGreen, $hsvGreen->toRGBA() ],
-            [ $rgbBlue, $hsvBlue->toRGBA() ],
-            [ $rgbWhite, $hsvWhite->toRGBA() ],
-            [ $rgbBlack, $hsvBlack->toRGBA() ],
-            [ $rgbCyan, $hsvCyan->toRGBA() ]
+            [ new HSV(360, 1, 1), new RGB(255, 0, 0) ],       // Red
+            [ new HSV(120, 1, 1), new RGB(0, 255, 0) ],       // Green
+            [ new HSV(240, 1, 1), new RGB(0, 0, 255) ],       // Blue
+            [ new HSV(360, 0, 1), new RGB(255, 255, 255) ],   // White
+            [ new HSV(360, 0, 0), new RGB(0, 0, 0) ],         // Black
+            [ new HSV(175, 1, 1), new RGB(0, 255, 234) ],     // Cyan
+            [ new HSV(90, 0.26, 0.65), new RGB(144, 166, 123)]       // Pale Army Green
         ];
     }
 }

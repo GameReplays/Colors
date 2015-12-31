@@ -36,10 +36,27 @@ class RGBTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actualA);
     }
 
-    public function test_construction_rounds_up_color_channels_to_nearest_int()
+    public function test_construction_rounds_color_channels_down_to_nearest_int()
     {
         // Arrange
         $rgba = new RGB(10.1, 10.1, 10.1, 0);
+        $expected = 10;
+
+        // Act
+        $actualR = $rgba->r();
+        $actualG = $rgba->g();
+        $actualB = $rgba->b();
+
+        // Assert
+        $this->assertSame($expected, $actualR);
+        $this->assertSame($expected, $actualG);
+        $this->assertSame($expected, $actualB);
+    }
+
+    public function test_construction_rounds_color_channels_up_to_nearest_int()
+    {
+        // Arrange
+        $rgba = new RGB(10.5, 10.5, 10.5, 0);
         $expected = 11;
 
         // Act

@@ -12,7 +12,7 @@ final class HSV extends Color
     private $s = 0;
     private $v = 0; // aka brightness
 
-    public function __construct($h, $s, $v, $a)
+    public function __construct($h, $s, $v, $a = 1)
     {
         $this->h = $this->clampHue($h);
         $this->s = clamp($s, 0, 1);

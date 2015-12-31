@@ -4,7 +4,7 @@ namespace GameReplays\Color\Formats;
 
 use GameReplays\Color\Color;
 use function GameReplays\Functions\clamp;
-use function GameReplays\Functions\roundUp;
+use function GameReplays\Functions\roundInt;
 
 final class RGB extends Color
 {
@@ -12,11 +12,11 @@ final class RGB extends Color
     private $g = 0;
     private $b = 0;
 
-    public function __construct($r, $g, $b, $a)
+    public function __construct($r, $g, $b, $a = 1)
     {
-        $this->r = roundUp(clamp($r, 0, 255));
-        $this->g = roundUp(clamp($g, 0, 255));
-        $this->b = roundUp(clamp($b, 0, 255));
+        $this->r = roundInt(clamp($r, 0, 255));
+        $this->g = roundInt(clamp($g, 0, 255));
+        $this->b = roundInt(clamp($b, 0, 255));
         $this->setAlpha($a);
     }
 
